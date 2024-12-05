@@ -59,7 +59,7 @@ class Login(db.Model):
 @app.route('/', methods=['GET'])
 def serve_login_page():
     # Serve the loginpage.html file from the code/ui/ directory
-    return send_from_directory('code/ui', 'loginpage.html')
+    return send_from_directory('Code/UI', 'LoginPage.html')
 
 @app.route('/loginuser', methods=['POST'])
 def loginuser():
