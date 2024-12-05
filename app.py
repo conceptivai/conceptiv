@@ -155,8 +155,10 @@ def modify_prompt():
         data = request.json
         user_id = data.get('user_id')
         modelname = data.get('modelname', 'Josephine')
+        previousprompt=data.get('localprompt')
         role= AssistantModels[modelname]
         custom_prompt = data.get('customprompt', '').strip()
+
         # print("THE PREDEFINED MODEL ROLE IS: ",role,"\n\n\n")
         print("THE GIVEN CUSTOM PROMPT IS: ", custom_prompt,"\n\n\n")
 
@@ -176,8 +178,9 @@ def modify_prompt():
             session = ChatSession(user_id=user_id, custom_prompt=custom_prompt, history=[])
             db.session.add(session)
         else:
-            # if(session.custom_prompt!=custom_prompt):
-                # session.history = []
+            if(previousprompt!=custom_prompt):
+                session.history = []
+
             session.custom_prompt = custom_prompt
             session.updated_at = datetime.now(timezone.utc)
 
@@ -217,8 +220,7 @@ def chat_endpoint():
             # print("typeofhistory:",type(history),"\n\n")
 
         # Append user message
-        if(user_message!="hi"):
-            history=history+[{"role": "user", "parts": [user_message]}]
+        history=history+[{"role": "user", "parts": [user_message]}]
         # print(history)
 
         # Generate AI response
@@ -231,8 +233,8 @@ def chat_endpoint():
             return jsonify({"error": "Error interacting with AI model"}), 500
 
         # Append AI response to history
-        if(user_message!="hi"):
-            history=history+[{"role": "assistant", "parts": [ai_response]}]
+        # if(user_message!="hi"):
+        history=history+[{"role": "assistant", "parts": [ai_response]}]
 
         # Update session in-memory history and database
         session.history=history
