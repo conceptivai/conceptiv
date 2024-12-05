@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSIA - Dashboard</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="CompanyDetails.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="side-navbar-layout">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+            <div class="logo-container">
+                <h1 class="logo">SENSIA</h1>
+            </div>
+            <ul class="menu-items">
+                <li><a href="Dashboard.html" class="menu-item">Dashboard</a></li>
+                <li><a href="#" class="menu-item active">Company Details</a></li>
+                <li><a href="Agent.html" class="menu-item">Agent</a></li>
+                <li><a href="ProductDetails.html" class="menu-item">Product Details</a></li>
+                <li><a href="ServiceDetails.html" class="menu-item">Service Details</a></li>
+                <li><a href="TermsPolicies.html" class="menu-item">Terms and Policy</a></li>
+                <li><a href="KnowledgeBase.html" class="menu-item">Knowledge Base</a></li>
+            </ul>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="content-area">
+                <h2>Company Details</h2>
+                <form id="company-details-form" class="form">
+                    <div class="form-group">
+                        <label for="company-name">Name</label>
+                        <input type="text" id="company-name" placeholder="Enter company name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="industry">Industry</label>
+                        <input type="text" id="industry" placeholder="Enter industry" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" placeholder="Enter location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Website</label>
+                        <input type="url" id="website" placeholder="Enter website URL">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" placeholder="Enter phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="license">License</label>
+                        <input type="text" id="license" placeholder="Enter license number" required>
+                    </div>
+                    <button type="submit" class="save-button">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="home.js"></script>
+    <script src="CompanyDetails.js"></script>
+</body>
+
+</html>

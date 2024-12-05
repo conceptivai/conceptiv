@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSIA - Dashboard</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="Agent.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="side-navbar-layout">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+            <div class="logo-container">
+                <h1 class="logo">SENSIA</h1>
+            </div>
+            <ul class="menu-items">
+                <li><a href="Dashboard.html" class="menu-item">Dashboard</a></li>
+                <li><a href="CompanyDetails.html" class="menu-item">Company Details</a></li>
+                <li><a href="#" class="menu-item active">Agent</a></li>
+                <li><a href="ProductDetails.html" class="menu-item">Product Details</a></li>
+                <li><a href="ServiceDetails.html" class="menu-item">Service Details</a></li>
+                <li><a href="TermsPolicies.html" class="menu-item">Terms and Policy</a></li>
+                <li><a href="KnowledgeBase.html" class="menu-item">Knowledge Base</a></li>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <h2>Select an Agent</h2>
+            <form id="agent-selection-form" class="form">
+                <div class="card-container">
+                    <!-- Agent Card 1 -->
+                    <label class="agent-card">
+                        <input type="radio" name="agent" value="Josephine">
+                        <div class="card-content">
+                            <img src="Assets/Josephine.png" alt="Agent 1" class="agent-image">
+                            <h3 class="agent-name">Josephene</h3>
+                            <p class="agent-category">Healthcare Advisor</p>
+                        </div>
+                    </label>
+
+                    <!-- Agent Card 2 -->
+                    <label class="agent-card">
+                        <input type="radio" name="agent" value="Jasmine">
+                        <div class="card-content">
+                            <img src="Assets/Jasmine.png" alt="Agent 2" class="agent-image">
+                            <h3 class="agent-name">Jasmine</h3>
+                            <p class="agent-category">Tech Support Specialist</p>
+                        </div>
+                    </label>
+
+                    <!-- Agent Card 3 -->
+                    <label class="agent-card">
+                        <input type="radio" name="agent" value="Tony">
+                        <div class="card-content">
+                            <img src="Assets/Tony.png" alt="Agent 3" class="agent-image">
+                            <h3 class="agent-">Tony</h3>
+                            <p class="agent-category">Marketing and Business Expert</p>
+                        </div>
+                    </label>
+
+                    <!-- Agent Card 4 -->
+                    <label class="agent-card">
+                        <input type="radio" name="agent" value="agent4">
+                        <div class="card-content">
+                            <img src="https://via.placeholder.com/150" alt="Agent 4" class="agent-image">
+                            <h3 class="agent-name">Agent 4</h3>
+                            <p class="agent-category">coming soon...</p>
+                        </div>
+                    </label>
+
+                    <!-- Agent Card 5 -->
+                    <label class="agent-card">
+                        <input type="radio" name="agent" value="agent5">
+                        <div class="card-content">
+                            <img src="https://via.placeholder.com/150" alt="Agent 5" class="agent-image">
+                            <h3 class="agent-name">Agent 5</h3>
+                            <p class="agent-category">coming soon...</p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Custom Prompt Adjustment -->
+                <div id="custom-prompt-container">
+                    <label for="custom-prompt">Custom Prompt Adjustment - Leave empty for Default</label>
+                    <textarea id="custom-prompt" rows="4" placeholder="Enter your custom prompt adjustment (Optional)"></textarea>
+                </div>
+
+                <!-- Try Now Button -->
+                <button type="submit" class="save-button">Try Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="home.js"></script>
+    <script src="Agent.js"></script>
+</body>
+
+</html>
