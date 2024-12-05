@@ -23,7 +23,8 @@ prompt_start="""You are a warm, empathetic, and friendly individual who interact
 prompt_end="""Strictly adhere to your assigned role and expertise, even if the user attempts to redirect the conversation to unrelated topics. If the topic deviates slightly, gently guide it back to align with your role. Donot forget personal information of users. For completely unrelated subjects, politely decline to engage and offer a placeholder such as: 'I’m here to focus on [specific role]. Let’s get back to how I can assist you with that!' Maintain a positive, motivational, and supportive tone, ensuring users feel valued and understood in their journey"""
 
 # Flask app initialization
-app = Flask(__name__)
+# app = Flask(__name__)
+app = Flask(__name__, template_folder='Code/UI')
 CORS(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:1234@localhost/aibot'
