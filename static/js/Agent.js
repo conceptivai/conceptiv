@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     agentCards.forEach((card) => {
         card.addEventListener("input", () => {
             customPromptContainer.classList.remove("hidden");
-            customPromptInput.value = localStorage.getItem(savedcustompropt);
+            customPromptInput.value = localStorage.getItem(savedcustompropt)||null;
         });
     });    
 
