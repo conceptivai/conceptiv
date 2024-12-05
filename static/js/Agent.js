@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         // Prepare the JSON payload
-        const prevsavedcustompropt = localStorage.getItem(savedcustompropt);
+        const prevsavedcustompropt = localStorage.getItem(savedcustompropt) || null;
         const payload = {
             modelname: selectedAgent.value,
             localprompt: prevsavedcustompropt,
