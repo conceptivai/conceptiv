@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
                 alert("Prompt updated successfully: " + data.message);
                 // Redirect to index.html
-                localStorage.setItem(customPrompt);
+                localStorage.setItem(savedcustompropt,customPrompt);
                 window.location.href = "/home";
                 
             } else {
