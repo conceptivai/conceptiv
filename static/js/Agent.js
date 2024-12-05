@@ -4,11 +4,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const customPromptInput = document.getElementById("custom-prompt");
     const form = document.getElementById("agent-selection-form");
 
+  
+
     // Show custom prompt input when a card is selected
     agentCards.forEach((card) => {
         card.addEventListener("input", () => {
             customPromptContainer.classList.remove("hidden");
-            customPromptInput.value = localStorage.getItem(savedcustompropt)||null;
+            try {
+                customPromptInput.value = localStorage.getItem(savedcustompropt)||null;
+            } catch (error) {
+                // Code that runs if an error occurs
+                localStorage.setItem(savedcustompropt,"");
+                console.error("An error occurred:", error.message);
+            } finally {
+                // Code that runs no matter what (optional)
+                console.log("This will always run.");
+            }
+            
         });
     });    
 
