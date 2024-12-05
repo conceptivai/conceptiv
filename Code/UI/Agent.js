@@ -32,16 +32,17 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         // Prepare the JSON payload
+        const prevsavedcustompropt = localStorage.getItem(savedcustompropt);
         const payload = {
             modelname: selectedAgent.value,
-            // customprompt: customPrompt || null,
+            localprompt: prevsavedcustompropt,
             customprompt: customPrompt,
             user_id: userId
         };
 
         try {
             // Send POST request to the Flask backend
-            const response = await fetch("http://127.0.0.1:8000/prompt", {
+            const response = await fetch("https://conceptiv.onrender.com/prompt", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -134,7 +134,7 @@ function removeTypingIndicator() {
   function fetchInitialMessage() {
       addTypingIndicator();
 
-      fetch("http://127.0.0.1:8000/chat", {
+      fetch("https://conceptiv.onrender.com/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: "hi", user_id: localStorage.getItem("user_id") }),
@@ -165,7 +165,7 @@ function removeTypingIndicator() {
     userInput.value = ""; // Clear the input field
     addTypingIndicator();
 
-    fetch("http://127.0.0.1:8000/chat", {
+    fetch("https://conceptiv.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText, user_id: localStorage.getItem("user_id") }),
