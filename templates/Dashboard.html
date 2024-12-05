@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENSIA - Dashboard</title>
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="Dashboard.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Dashboard.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300&display=swap"
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -71,8 +71,8 @@
     </div>
     </div>
 
-    <script src="home.js"></script>
-    <script src="Dashboard.js"></script>
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Dashboard.js') }}"></script>
 </body>
 
 </html>

@@ -1,0 +1,130 @@
+/* General Layout */
+.side-navbar-layout {
+    display: flex;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    position: relative;
+}
+
+/* Hamburger Menu Button */
+.hamburger-btn {
+    display: none;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #673ab7;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 5px;
+}
+
+/* Side Navbar */
+.side-navbar {
+    background: #673ab7;
+    color: white;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.side-navbar.hidden {
+    transform: translateX(-250px); /* Hide the navbar on mobile */
+}
+
+.logo-container {
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.menu-item {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.menu-item:hover {
+    background: #5e35b1;
+}
+
+/* Active Tab Styling */
+.menu-item.active {
+    background: #f3f3f3;
+    color: #673ab7;
+    font-weight: 600;
+    border-radius: 20px 0 0 20px;
+    /* box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); */
+}
+
+/* Content Area */
+.content-area {
+    flex: 1;
+    padding: 20px;
+    background: #f3f3f3;
+    overflow-y: auto;
+}
+
+.content-area h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    color: #673ab7;
+}
+
+.content-area p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .side-navbar-layout {
+        flex-direction: column;
+    }
+
+    .hamburger-btn {
+        display: block; /* Show hamburger menu on mobile */
+    }
+
+    .side-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 999;
+        transform: translateX(-250px); /* Initially hidden */
+    }
+
+    .side-navbar.open {
+        transform: translateX(0); /* Show navbar when open */
+    }
+
+    .content-area {
+        padding: 15px;
+        margin-top: 50px; /* Avoid overlapping with the hamburger button */
+    }
+}
