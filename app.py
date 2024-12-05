@@ -67,36 +67,36 @@ def serve_login_page():
     return render_template('LoginPage.html')
   
 @app.route('/agent', methods=['GET'])
-def serve_login_page():
+def serve_agent_page():
     return render_template('Agent.html')
 
 @app.route('/dashboard', methods=['GET'])
-def serve_login_page():
+def serve_dashboard_page():
     return render_template('Dashboard.html')
 
 @app.route('/company-detail', methods=['GET'])
-def serve_login_page():
+def serve_company_page():
     return render_template('CompanyDetails.html')
     
 @app.route('/home', methods=['GET'])
-def serve_login_page():
+def serve_home_page():
     return render_template('index.html')
 
 @app.route('/product-detail', methods=['GET'])
-def serve_login_page():
+def serve_product_page():
     return render_template('ProductDetails.html')
 
 @app.route('/service-detail', methods=['GET'])
-def serve_login_page():
+def serve_service_page():
     return render_template('ServiceDetails.html')
 
 @app.route('/terms', methods=['GET'])
-def serve_login_page():
+def serve_terms_page():
     return render_template('TermsPolicies.html')
 
 
 @app.route('/knowledge', methods=['GET'])
-def serve_login_page():
+def serve_knowledge_page():
     return render_template('KnowledgeBase.html')
 
 # @app.route('/', methods=['GET'])
@@ -116,7 +116,7 @@ def loginuser():
         return jsonify({
             "status": "success",
             "message": "Login successful!",
-            "redirect": "dashboard.html",
+            "redirect": "/agent",
             "user": {
                 "user_id": user.user_id,
                 "fname": user.fname,
