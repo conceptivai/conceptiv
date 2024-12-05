@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import google.generativeai as genai
 # from Auth import geminikey
@@ -55,6 +55,11 @@ class Login(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
 
 # Routes
+
+@app.route('/', methods=['GET'])
+def serve_login_page():
+    # Serve the loginpage.html file from the code/ui/ directory
+    return send_from_directory('code/ui', 'loginpage.html')
 
 @app.route('/loginuser', methods=['POST'])
 def loginuser():
