@@ -4,9 +4,10 @@ import google.generativeai as genai
 # from Auth import geminikey
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
+import os
 
 # Configure the generative AI model
-genai.configure(api_key=geminikey)
+genai.configure(api_key=os.environ.get('geminikey'))
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Assistant models configuration
