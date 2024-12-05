@@ -64,7 +64,7 @@ UI_DIRECTORY = os.path.join(os.getcwd(), 'Code', 'UI')
 
 @app.route('/', methods=['GET'])
 def serve_login_page():
-    return render_template('loginpage.html')
+    return render_template('LoginPage.html')
 
 # @app.route('/', methods=['GET'])
 # def serve_login_page():
