@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const customPromptContainer = document.getElementById("custom-prompt-container");
     const customPromptInput = document.getElementById("custom-prompt");
     const form = document.getElementById("agent-selection-form");
+    const savedcustompropt = "customPromptKey";
 
   
 
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const userId = localStorage.getItem("user_id");
         if (!userId) {
             alert("User not logged in. Please log in again.");
-            window.location.href = "login.html"; // Redirect to login if user_id is missing
+            window.location.href = "/"; // Redirect to login if user_id is missing
             return;
         }
         // Prepare the JSON payload
