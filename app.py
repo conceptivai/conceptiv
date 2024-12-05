@@ -65,6 +65,39 @@ UI_DIRECTORY = os.path.join(os.getcwd(), 'Code', 'UI')
 @app.route('/', methods=['GET'])
 def serve_login_page():
     return render_template('LoginPage.html')
+  
+@app.route('/agent', methods=['GET'])
+def serve_login_page():
+    return render_template('Agent.html')
+
+@app.route('/dashboard', methods=['GET'])
+def serve_login_page():
+    return render_template('Dashboard.html')
+
+@app.route('/company-detail', methods=['GET'])
+def serve_login_page():
+    return render_template('CompanyDetails.html')
+    
+@app.route('/home', methods=['GET'])
+def serve_login_page():
+    return render_template('index.html')
+
+@app.route('/product-detail', methods=['GET'])
+def serve_login_page():
+    return render_template('ProductDetails.html')
+
+@app.route('/service-detail', methods=['GET'])
+def serve_login_page():
+    return render_template('ServiceDetails.html')
+
+@app.route('/terms', methods=['GET'])
+def serve_login_page():
+    return render_template('TermsPolicies.html')
+
+
+@app.route('/knowledge', methods=['GET'])
+def serve_login_page():
+    return render_template('KnowledgeBase.html')
 
 # @app.route('/', methods=['GET'])
 # def serve_login_page():
