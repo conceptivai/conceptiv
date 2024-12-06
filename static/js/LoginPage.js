@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle between Login and Signup forms
     loginRadio.addEventListener("change", () => {
         if (loginRadio.checked) {
-            authTitle.textContent = "Login to SENSIA";
+            authTitle.textContent = "Login to Coceptiv AI";
             loginForm.classList.remove("hidden");
             signupForm.classList.add("hidden");
         }
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     signupRadio.addEventListener("change", () => {
         if (signupRadio.checked) {
-            authTitle.textContent = "Signup for SENSIA";
+            authTitle.textContent = "Signup with Coceptiv AI";
             signupForm.classList.remove("hidden");
             loginForm.classList.add("hidden");
         }
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.getElementById("login-password").value;
 
         try {
-            const response = await fetch("https://conceptiv.onrender.com/loginuser", {
+            const response = await fetch("/loginuser", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("https://conceptiv.onrender.com/signupuser", {
+            const response = await fetch("/signupuser", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ fname, lname, email, phone: "1234567890", password }),

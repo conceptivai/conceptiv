@@ -4,55 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSIA - Chatbots</title>
+    <title>Conceptive Chat</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300&display=swap"
         rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bagel Fat One&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <!-- Website Navigation -->
     <header class="website-header">
         <div class="header-content">
-            <h1 class="logo">Conceptiv AI Assistance</h1>
-            <nav class="nav">
-                <a href="/" class="nav-item">Home</a>
-                <a href="#" class="nav-item">Services</a>
-                <a href="#" class="nav-item">Contact</a>
-            </nav>
+            <h1 class="logo">Conceptiv AI</h1>
         </div>
     </header>
 
     <!-- Main Section -->
     <main>
 
+        <!-- Premium Modal -->
         <div id="premium-modal" class="modal">
             <div class="modal-content">
-              <h2>Free Usage Ended</h2>
-              <p>Your free usage has ended. Please upgrade to Premium to continue using our services.</p>
-              <button id="buy-premium-btn">RESTART DEMO</button>
+                <h2>Free Usage Ended</h2>
+                <p>Your free usage has ended. Please upgrade to Premium to continue using our services.</p>
+                <button id="buy-premium-btn">Restart Demo</button>
             </div>
-          </div>
+        </div>
 
         <!-- Chatbox Section -->
         <section class="chatbox-section">
             <div class="chat-container">
                 <header class="chat-header">
-                    <h2>SENSIA AIr</h2>
+                    <!-- Dynamic Title for Chat -->
+                    <h2 id="chat-title">Conceptiv AI</h2>
                 </header>
                 <div id="chat-window" class="chat-window">
                     <div class="notification-bar">
                         Free usage ends in <span id="countdown">10:00</span>. Upgrade to Premium for unlimited access.
                     </div>
                     <div id="messages" class="messages"></div>
-                    <div id="messages" class="messages">
-                        <!-- <div class="message bot">
-              <span class="name">Josephene</span>
-              <div class="bubble">
-                <p>Hi, how can I help you?</p>
-              </div>
-            </div> -->
-                    </div>
                 </div>
                 <div class="chat-input-container">
                     <input type="text" id="user-input" placeholder="Type your message...">
@@ -61,29 +51,6 @@
             </div>
         </section>
 
-        <!-- Additional Content Section -->
-        <section class="info-section">
-            <div class="info-card">
-                <h3>Why Choose SENSIA's AI?</h3>
-                <p>Josephene provides cutting-edge healthcare advice powered by AI to ensure you get the most accurate
-                    and timely information. Your health, our priority.</p>
-            </div>
-            <div class="info-card">
-                <h3>Our Services</h3>
-                <ul>
-                    <li>Personalized healthcare recommendations</li>
-                    <li>24/7 chatbot assistance</li>
-                    <li>Health tips and alerts</li>
-                    <li>Secure and confidential chats</li>
-                </ul>
-            </div>
-            <div class="info-card">
-                <h3>Contact Us</h3>
-                <p>Email: Josephene@sensia-consulting.com</p>
-                <p>Phone: +1-800-53N514</p>
-                <p>Follow us on social media for updates!</p>
-            </div>
-        </section>
         <button id="logout-btn" class="logout-btn">Logout</button>
     </main>
 

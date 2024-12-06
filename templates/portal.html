@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Interactions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">
+</head>
+<body>
+    <h1>User Interaction Dashboard</h1>
+
+    <!-- Table for Latest Users -->
+    <h2>Latest User Interactions</h2>
+    <table id="latest-users-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Latest Interaction</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Dropdown and Fetch Button -->
+    <div id="filter-section">
+        <label for="email-dropdown">Select Email:</label>
+        <select id="email-dropdown">
+            <option value="everything">Everything</option>
+        </select>
+        <button id="fetch-button">Fetch Messages</button>
+    </div>
+
+    <!-- Table for Messages -->
+    <h2>User Messages</h2>
+    <table id="messages-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>User Message</th>
+                <th>Bot Reply</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
+</body>
+</html>

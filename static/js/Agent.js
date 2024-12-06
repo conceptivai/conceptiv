@@ -1,82 +1,147 @@
 document.addEventListener("DOMContentLoaded", () => {
     const agentCards = document.querySelectorAll(".agent-card input[type='radio']");
-    const customPromptContainer = document.getElementById("custom-prompt-container");
-    const customPromptInput = document.getElementById("custom-prompt");
-    const form = document.getElementById("agent-selection-form");
+    const fields = ["name", "persona", "purpose", "attitude", "uniquetraits", "limitations"];
     const savedcustompropt = "customPromptKey";
+    
 
-  
+    const agentData = {
+        Josephine: { 
+            name: "Josephine", 
+            persona: "Expert Healthcare Advisor", 
+            purpose: "Health Guidance", 
+            attitude: "Empathetic", 
+            uniquetraits: "Warm, Friendly",
+            limitations: "Be Polite" 
+        },
+        Jasmine: { 
+            name: "Jasmine", 
+            persona: "Tech Support Specialist", 
+            purpose: "Tech Support", 
+            attitude: "Professional", 
+            uniquetraits: "Detail-oriented" ,
+            limitations: "Be Polite"
+        },
+        Tony: { 
+            name: "Tony", 
+            persona: "Marketing Expert", 
+            purpose: "Business Growth", 
+            attitude: "Charismatic", 
+            uniquetraits: "Strategic Thinker" ,
+            limitations: "Be Polite"
+        },
+        agent4: {
+            name: "Agent 4",
+            persona: "",
+            purpose: "",
+            attitude: "",
+            uniquetraits: "coming soon"
+        },
+        agent5: {
+            name: "Agent 5",
+            persona: "",
+            purpose: "",
+            attitude: "",
+            uniquetraits: "coming soon"
+        },
+    };
 
-    // Show custom prompt input when a card is selected
-    agentCards.forEach((card) => {
-        card.addEventListener("input", () => {
-            customPromptContainer.classList.remove("hidden");
-            try {
-                customPromptInput.value = localStorage.getItem(savedcustompropt)||null;
-            } catch (error) {
-                // Code that runs if an error occurs
-                localStorage.setItem(savedcustompropt,"");
-                console.error("An error occurred:", error.message);
-            } finally {
-                // Code that runs no matter what (optional)
-                console.log("This will always run.");
+    // const updateChatboxTitle = () => {
+    //     const botName = localStorage.getItem("customPromptName") || "Bot";
+    //     document.getElementById("chat-title").textContent = botName;
+    // };
+
+    // Populate saved fields from localStorage on page load
+    fields.forEach(field => {
+        const input = document.getElementById(field);
+        input.value = localStorage.getItem(field) || "";
+        input.addEventListener("input", () => {
+            localStorage.setItem(field, input.value);
+
+            // Update bot name dynamically if the "name" field changes
+            if (field === "name") {
+                localStorage.setItem("customPromptName", input.value || "Bot");
+                // updateChatboxTitle();
             }
-            
         });
-    });    
+    });
 
-    // Handle form submission
-    form.addEventListener("submit", async (e) => {
+    // Update fields and store selected bot name when an agent is selected
+    agentCards.forEach(card => {
+        card.addEventListener("change", () => {
+            const selectedAgent = card.value;
+            const data = agentData[selectedAgent] || {};
+
+            // Save the bot name for use in the chat interface
+            localStorage.setItem("customPromptName", data.name || "Bot");
+            // updateChatboxTitle();
+
+            fields.forEach(field => {
+                const input = document.getElementById(field);
+                input.value = data[field] || "";
+                localStorage.setItem(field, data[field] || "");
+            });
+        });
+    });
+
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('click', () => {
+            const button = document.querySelector('.save-button');
+            button.scrollIntoView({
+                behavior: 'smooth', // Smooth scrolling effect
+                block: 'center',    // Align the button to the center of the viewport
+            });
+        });
+    });
+
+    // Submit handler
+    document.getElementById("agent-selection-form").addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        // Get selected agent and custom prompt value
-        const selectedAgent = document.querySelector(".agent-card input[type='radio']:checked");
-        const customPrompt = customPromptInput.value;
-
-        if (!selectedAgent) {
-            alert("Please select an agent.");
-            return;
-        }
-
         const userId = localStorage.getItem("user_id");
         if (!userId) {
             alert("User not logged in. Please log in again.");
-            window.location.href = "/"; // Redirect to login if user_id is missing
+            window.location.href = "/";
             return;
         }
-        // Prepare the JSON payload
+
+        // Create a custom prompt string for submission
+        const customPrompt = fields
+            .map(field => {
+                const value = document.getElementById(field).value;
+                return value ? `Your ${field} is ${value}.` : null;
+            })
+            .filter(Boolean) // Remove null or undefined values
+            .join(" ");
+
+        if (!customPrompt) {
+            alert("Please fill at least one field to create a custom prompt.");
+            return;
+        }
+
         const prevsavedcustompropt = localStorage.getItem(savedcustompropt) || null;
         const payload = {
-            modelname: selectedAgent.value,
+            user_id: userId,
             localprompt: prevsavedcustompropt,
             customprompt: customPrompt,
-            user_id: userId
         };
 
         try {
-            // Send POST request to the Flask backend
-            const response = await fetch("https://conceptiv.onrender.com/prompt", {
+            const response = await fetch("/prompt", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
             });
 
             if (response.ok) {
-                const data = await response.json();
-                alert("Prompt updated successfully: " + data.message);
-                // Redirect to index.html
-                localStorage.setItem(savedcustompropt,customPrompt);
+                alert("Prompt updated successfully!");
+                localStorage.setItem(savedcustompropt, customPrompt);
                 window.location.href = "/home";
-                
             } else {
                 const errorData = await response.json();
                 alert("Error: " + errorData.error);
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("Failed to update the prompt. Please try again.");
+            alert("Failed to update the prompt.");
         }
     });
 });

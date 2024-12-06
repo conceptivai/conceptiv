@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSIA - Dashboard</title>
+    <title>Agent</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Agent.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300&display=swap"
         rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bagel Fat One&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -16,7 +18,7 @@
         <!-- Side Navbar -->
         <nav class="side-navbar">
             <div class="logo-container">
-                <h1 class="logo">SENSIA</h1>
+                <h1 class="logo">Conceptiv AI</h1>
             </div>
             <ul class="menu-items">
                 <li><a href="/dashboard" class="menu-item">Dashboard</a></li>
@@ -66,7 +68,7 @@
 
                     <!-- Agent Card 4 -->
                     <label class="agent-card">
-                        <input type="radio" name="agent" value="agent4">
+                        <input type="radio" name="agent" value="agent4" disabled>
                         <div class="card-content">
                             <img src="https://via.placeholder.com/150" alt="Agent 4" class="agent-image">
                             <h3 class="agent-name">Agent 4</h3>
@@ -76,7 +78,7 @@
 
                     <!-- Agent Card 5 -->
                     <label class="agent-card">
-                        <input type="radio" name="agent" value="agent5">
+                        <input type="radio" name="agent" value="agent5" disabled>
                         <div class="card-content">
                             <img src="https://via.placeholder.com/150" alt="Agent 5" class="agent-image">
                             <h3 class="agent-name">Agent 5</h3>
@@ -86,9 +88,29 @@
                 </div>
 
                 <!-- Custom Prompt Adjustment -->
-                <div id="custom-prompt-container">
+                <!-- <div id="custom-prompt-container">
                     <label for="custom-prompt">Custom Prompt Adjustment - Leave empty for Default</label>
                     <textarea id="custom-prompt" rows="4" placeholder="Enter your custom prompt adjustment (Optional)"></textarea>
+                </div> -->
+
+                <div id="custom-fields-container">
+                    <label for="name">Name</label>
+                    <textarea id="name" placeholder="Enter the name"></textarea>
+                
+                    <label for="persona">Persona</label>
+                    <textarea id="persona" placeholder="Enter the persona"></textarea>
+                
+                    <label for="purpose">Purpose</label>
+                    <textarea id="purpose" placeholder="Enter the purpose"></textarea>
+                
+                    <label for="attitude">Attitude</label>
+                    <textarea id="attitude" placeholder="Enter the attitude"></textarea>
+                
+                    <label for="uniquetraits">Unique Traits</label>
+                    <textarea id="uniquetraits" placeholder="Enter unique traits"></textarea>
+                
+                    <label for="limitations">Limitations</label>
+                    <textarea id="limitations" placeholder="Enter limitations"></textarea>
                 </div>
 
                 <!-- Try Now Button -->
