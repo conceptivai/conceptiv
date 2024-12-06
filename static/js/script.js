@@ -78,20 +78,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // Split long messages into chunks
     function splitMessage(message) {
         const MAX_LENGTH = 120; // Example threshold
-        const sentences = message.split(/(?<=[.!?])\s+/);
+    
+        // Regular expression to split before a number followed by a period and a space
+        const sentences = message.split(/(?=\d\.\s)/);
         let chunks = [];
         let currentChunk = "";
-  
-        sentences.forEach((sentence) => {
+    
+        sentences.forEach((sentence, index) => {
+            // Always ensure splitting respects the number-period rule
             if (currentChunk.length + sentence.length <= MAX_LENGTH) {
                 currentChunk += (currentChunk ? " " : "") + sentence;
             } else {
+                chunks.push(currentChunk); // Finalize the current chunk
+                currentChunk = sentence; // Start a new chunk with the current sentence
+            }
+    
+            // Add the final chunk if it's the last sentence
+            if (index === sentences.length - 1 && currentChunk) {
                 chunks.push(currentChunk);
-                currentChunk = sentence;
             }
         });
-        if (currentChunk) chunks.push(currentChunk);
-  
+    
         return chunks;
     }
 

@@ -259,15 +259,17 @@ def chat_endpoint():
             print("Missing message or user_id")
             return jsonify({"error": "Message and User ID are required"}), 400
 
-        # Retrieve or create session
+         # Retrieve or create session
         session = db.session.query(ChatSession).filter_by(user_id=user_id).first()
         if not session:
             print("Session not initialized")
             return jsonify({"error": "Session not initialized. Please set up a custom prompt first."}), 400
 
         # Prepare history for OpenAI API
+        constraints=" Whenever responding to user saying hi, introduce yourself and speak. Keep your responses consize unless it is demanded by the situation of conversation for it to be long, else try to keep it within the amount how a person might in a clear text based conversation"
+        constrained_prompt=[{"role": "user", "content": constraints}]
         history = session.history + [{"role": "user", "content": user_message}]
-        session_history = [{"role": "system", "content": session.custom_prompt}] + history
+        session_history = [{"role": "system", "content": session.custom_prompt}] + history + constrained_prompt
         print("Session history:", session_history)
 
         # Correct usage of openai.chat.completions.create
