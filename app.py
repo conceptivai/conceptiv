@@ -8,8 +8,7 @@ from sqlalchemy.sql import text  # Import the text function
 import os
 
 # Configure OpenAI API
-openai.api_key = openaikey.key
-genai.configure(api_key=os.environ.get('openaikey'))
+openai.api_key = os.environ.get('openaikey')
 # Assistant models configuration
 AssistantModels = {
     "Josephine": "Your name is Josephine and you are an Expert Healthcare Advisor",
