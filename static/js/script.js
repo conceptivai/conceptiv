@@ -77,30 +77,46 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Split long messages into chunks
     function splitMessage(message) {
-        const MAX_LENGTH = 120; // Example threshold
+        const MAX_LENGTH = 120; // Maximum allowed length per chunk
     
-        // Regular expression to split before a number followed by a period and a space
-        const sentences = message.split(/(?=\d\.\s)/);
+        // Split by sentence boundaries or start of numbered list items
+        const sentences = message.split(/(?<=\.\s)|(?=\d\.\s)/);
+    
         let chunks = [];
         let currentChunk = "";
     
         sentences.forEach((sentence, index) => {
-            // Always ensure splitting respects the number-period rule
-            if (currentChunk.length + sentence.length <= MAX_LENGTH) {
-                currentChunk += (currentChunk ? " " : "") + sentence;
+            sentence = sentence.trim(); // Remove leading and trailing spaces
+    
+            if (/^\d\.\s/.test(sentence)) {
+                // If it's a numbered list item, finalize the current chunk
+                if (currentChunk.length > 0) {
+                    chunks.push(currentChunk.trim());
+                }
+                currentChunk = sentence; // Start a new chunk with the numbered item
+            } else if (currentChunk.match(/^\d\.\s/)) {
+                // Append content to the current numbered list item
+                currentChunk += " " + sentence;
+            } else if (currentChunk.length + sentence.length > MAX_LENGTH) {
+                // If the chunk exceeds the max length, finalize it
+                chunks.push(currentChunk.trim());
+                currentChunk = sentence; // Start a new chunk
             } else {
-                chunks.push(currentChunk); // Finalize the current chunk
-                currentChunk = sentence; // Start a new chunk with the current sentence
+                // Otherwise, append the sentence to the current chunk
+                currentChunk += (currentChunk ? " " : "") + sentence;
             }
     
-            // Add the final chunk if it's the last sentence
+            // Finalize the last chunk
             if (index === sentences.length - 1 && currentChunk) {
-                chunks.push(currentChunk);
+                chunks.push(currentChunk.trim());
             }
         });
     
         return chunks;
     }
+    
+    
+    
 
     const updateChatboxTitle = () => {
         const botName = localStorage.getItem("customPromptName") || "Bot";
