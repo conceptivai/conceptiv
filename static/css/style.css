@@ -39,6 +39,8 @@ body {
 
 .nav-item {
   color: white;
+  background-color: #e09100;
+  border-radius: 5px;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 400;
@@ -99,11 +101,13 @@ body {
   background: #ff9800;
   color: white;
   padding: 10px;
+  margin-bottom: 10px;
   text-align: center;
   font-size: 0.9rem;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
   border-bottom: 1px solid #e09100;
+  border-radius: 5px;
 }
 
 .messages {

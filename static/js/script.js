@@ -93,6 +93,89 @@ document.addEventListener("DOMContentLoaded", () => {
             listItem.textContent = review;
             reviewsList.appendChild(listItem);
         });
+    
+    
+    
+    // function initializeTimer() {
+    //     const now = Date.now();
+    //     let startTime = localStorage.getItem(TIMER_KEY);
+    
+    //     if (!startTime) {
+    //         // First interaction: Create the key and start countdown
+    //         startTime = now;
+    //         localStorage.setItem(TIMER_KEY, startTime);
+    //         startCountdown(FREE_USAGE_DURATION);
+    //         return; // Exit to avoid modal display logic
+    //     }
+    
+    //     const elapsed = now - startTime;
+    //     const remainingTime = Math.max(FREE_USAGE_DURATION - elapsed, 0);
+    
+    //     if (remainingTime <= 0) {
+    //         // Time expired: Show modal
+    //         showPremiumModal();
+    //     } else {
+    //         // Time remaining: Start countdown
+    //         startCountdown(remainingTime);
+    //     }
+    // }
+  
+    // // Start Countdown
+    // function startCountdown(remainingTime) {
+    //     clearInterval(countdownInterval); // Clear any previous intervals
+    //     countdownInterval = setInterval(() => {
+    //         if (remainingTime <= 0) {
+    //             clearInterval(countdownInterval);
+    //             localStorage.removeItem(TIMER_KEY); // Reset timer
+    //             showPremiumModal();
+    //         } else {
+    //             remainingTime -= 1000;
+    //             updateCountdownDisplay(remainingTime);
+    //         }
+    //     }, 1000);
+    // }
+  
+    // // Update Countdown Display
+    // function updateCountdownDisplay(remainingTime) {
+    //     const minutes = Math.floor(remainingTime / 60000);
+    //     const seconds = Math.floor((remainingTime % 60000) / 1000);
+    //     countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    // }
+  
+    // // Reset Timer and Hide Modal
+    // function resetTimer() {
+    //     const now = Date.now();
+    //     localStorage.setItem(TIMER_KEY, now); // Reset timer to the current time
+    //     hidePremiumModal();
+    //     startCountdown(FREE_USAGE_DURATION); // Restart countdown
+    //     alert("Thank you for upgrading to Premium!");
+    // }
+  
+    // // Show Premium Modal
+    // function showPremiumModal() {
+    //     modal.style.display = "flex";
+    //     document.body.style.overflow = "hidden"; // Prevent scrolling
+    // }
+  
+    // // Hide Premium Modal
+    // function hidePremiumModal() {
+    //     modal.style.display = "none";
+    //     document.body.style.overflow = "auto"; // Restore scrolling
+    // }
+
+
+    //     // Update DOM elements
+    //     document.getElementById("profile-picture").src = profilePicture;
+    //     document.getElementById("profile-title").textContent = profileTitle;
+    //     document.getElementById("profile-description").textContent = profileDescription;
+    
+    //     // Add reviews to the list
+    //     const reviewsList = document.getElementById("reviews-list");
+    //     reviews.forEach(review => {
+    //         const listItem = document.createElement("li");
+    //         listItem.textContent = review;
+    //         reviewsList.appendChild(listItem);
+    //     });
 
 //         localStorage.setItem("profilePicture", "path-to-your-image.jpg");
 // localStorage.setItem("profileTitle", "John Doe");
@@ -142,8 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
         return chunks;
     }
-    
-    
     
 
     const updateChatboxTitle = () => {
@@ -299,7 +380,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
   
-    buyPremiumBtn.addEventListener("click", resetTimer);
+    // buyPremiumBtn.addEventListener("click", payment());
+
+    const stripe = Stripe(stripePublishableKey); // Using the key passed from Flask
+
+    const checkoutButton = document.getElementById('regbutton');
+
+    checkoutButton.addEventListener('click', function () {
+        fetch('/create-checkout-session', {
+            method: 'POST',
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (sessionId) {
+                return stripe.redirectToCheckout({ sessionId: sessionId.id });
+            })
+            .then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    });
+
+    buyPremiumBtn.addEventListener('click', function () {
+        fetch('/create-checkout-session', {
+            method: 'POST',
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (sessionId) {
+                return stripe.redirectToCheckout({ sessionId: sessionId.id });
+            })
+            .then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+            resetTimer();
+    });
   
     // Fetch the initial bot message on page load
     function fetchInitialMessage() {
