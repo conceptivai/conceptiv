@@ -552,8 +552,8 @@ textarea{
   margin: 0 auto; /* Center the image inside the profile section */
   width: 300px;
   height: 300px;
-  /* max-width: 100%;
-  max-height: 100%; */
+  max-width: 100%;
+  /* max-height: 100%; */
   object-fit: contain;
   border-radius: 5%;
 }
