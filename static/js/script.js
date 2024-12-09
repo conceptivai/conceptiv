@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("premium-modal");
     const buyPremiumBtn = document.getElementById("buy-premium-btn");
     const chatWindow = document.getElementById('chat-window');
+    const profilePicture = localStorage.getItem("profilePicture") || "default-avatar.png";
+    const profileTitle = localStorage.getItem("profileTitle") || "Your Title";
+    const profileDescription = localStorage.getItem("profileDescription") || "Short description goes here...";
+    const reviews = JSON.parse(localStorage.getItem("customerReviews") || "[]");
+
   
     const FREE_USAGE_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
     const TIMER_KEY = "chat_start_time";
@@ -74,6 +79,29 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "none";
         document.body.style.overflow = "auto"; // Restore scrolling
     }
+
+
+        // Update DOM elements
+        document.getElementById("profile-picture").src = profilePicture;
+        document.getElementById("profile-title").textContent = profileTitle;
+        document.getElementById("profile-description").textContent = profileDescription;
+    
+        // Add reviews to the list
+        const reviewsList = document.getElementById("reviews-list");
+        reviews.forEach(review => {
+            const listItem = document.createElement("li");
+            listItem.textContent = review;
+            reviewsList.appendChild(listItem);
+        });
+
+//         localStorage.setItem("profilePicture", "path-to-your-image.jpg");
+// localStorage.setItem("profileTitle", "John Doe");
+// localStorage.setItem("profileDescription", "An experienced software developer.");
+// localStorage.setItem("customerReviews", JSON.stringify([
+//     "Excellent service!",
+//     "Very professional.",
+//     "Highly recommended."
+// ]));
   
     // Split long messages into chunks
     function splitMessage(message) {

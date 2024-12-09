@@ -56,7 +56,7 @@ body {
 }
 
 .chat-container {
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;
   background: white;
   border-radius: 15px;
@@ -64,6 +64,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 80vh;
+  max-height: 90%;
   overflow: hidden;
 }
 
@@ -437,4 +438,139 @@ display: none;
 textarea{
   height: 150px;
   overflow-y: scroll ;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f3f3f3;
+  max-width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container {
+  text-align: center;
+}
+
+.profile-picture {
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.profile-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.profile-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 10px 0;
+}
+
+.customer-reviews {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.customer-reviews h4 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+#reviews-list {
+  list-style: none;
+  padding: 0;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+#reviews-list li {
+  margin-bottom: 10px;
+}
+
+.main-container {
+  display: flex;
+  gap: 20px;
+}
+
+.profile-section {
+  max-width: 250px;
+  flex: none; /* Ensures it doesn't grow or shrink */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .main-container {
+      flex-direction: column; /* Stack elements vertically */
+      align-items: center; /* Center the sections */
+  }
+
+  .profile-section {
+      max-width: 100%; /* Allow it to take full width */
+      margin-top: 20px; /* Add spacing from chatbox */
+  }
+
+  .chatbox-section {
+      max-width: 100%; /* Ensure chatbox also adjusts to full width */
+  }
+}
+
+/* Main Container (Desktop Layout) */
+.main-container {
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+  justify-content: flex-start; /* Start sections from left */
+  align-items: center; /* Align items to the top */
+  gap: 20px; /* Add spacing between the sections */
+  padding: 20px;
+}
+
+/* Chatbox Section */
+.chatbox-section {
+  flex: 2; /* Take up more space relative to the profile */
+  max-width: 70%; /* Optional: Limit width for balance */
+}
+
+/* Profile Section */
+.profile-section {
+  flex: 2; /* Take up less space */
+  max-width: 30%; /* Optional: Set max width for balance */
+  text-align: center; /* Center content within profile */
+  align-self: auto; /* Ensure it aligns with the top of the chatbox */
+  border-radius: 5%;
+}
+
+/* Profile Picture */
+.profile-picture {
+  display: flex;
+  margin: 0 auto; /* Center the image inside the profile section */
+  width: 300px;
+  height: 300px;
+  /* max-width: 100%;
+  max-height: 100%; */
+  object-fit: contain;
+  border-radius: 5%;
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .main-container {
+      flex-direction: column; /* Stack sections vertically */
+      align-items: center; /* Center sections horizontally */
+  }
+
+  .chatbox-section, .profile-section {
+      flex: none; /* Remove flex behavior */
+      max-width: 100%; /* Full width for both sections */
+  }
+
+  .profile-section {
+      margin-top: 20px; /* Add spacing between the chatbox and profile */
+  }
 }

@@ -16,6 +16,9 @@
     <header class="website-header">
         <div class="header-content">
             <h1 class="logo">Conceptiv AI</h1>
+            <nav class="nav">
+                <a href="/" class="nav-item">Register</a>
+            </nav>
         </div>
     </header>
 
@@ -31,6 +34,7 @@
             </div>
         </div>
 
+        <div class="main-container">
         <!-- Chatbox Section -->
         <section class="chatbox-section">
             <div class="chat-container">
@@ -50,6 +54,21 @@
                 </div>
             </div>
         </section>
+
+        <section class="profile-section">
+            <div class="profile-container">
+                <img id="profile-picture" src="default-avatar.png" alt="Profile Picture" class="profile-picture">
+                <h3 id="profile-title">Your Title</h3>
+                <p id="profile-description">Short description goes here...</p>
+                <div id="customer-reviews" class="customer-reviews">
+                    <h4>Customer Reviews</h4>
+                    <ul id="reviews-list">
+                        <!-- Reviews will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+        </div>
 
         <!-- <button id="logout-btn" class="logout-btn">Logout</button> -->
     </main>

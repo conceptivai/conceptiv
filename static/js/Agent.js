@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const agentCards = document.querySelectorAll(".agent-card input[type='radio']");
-    const fields = ["name", "persona", "purpose", "attitude", "uniquetraits", "limitations"];
+    const fields = ["name", "persona", "purpose", "attitude", "uniquetraits", "limitations","agent-profile-picture","agent-profile-name","agent-profile-description","agent-profile-reviews"];
     const savedcustompropt = "customPromptKey";
     
 
@@ -11,7 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
             purpose: "Health Guidance", 
             attitude: "Empathetic", 
             uniquetraits: "Warm, Friendly",
-            limitations: "Be Polite" 
+            limitations: "Be Polite" ,
+            'agent-profile-picture': "https://ideogram.ai/assets/image/lossless/response/BXzrsUhYSjGZZxagFSQ82A",
+            'agent-profile-name': "Josephine",
+            'agent-profile-description': "An expert healthcare advisor here to help you!",
+            'agent-profile-reviews': "⭐ Excellent service!,⭐ Very professional,⭐ Highly recommended.",
         },
         Jasmine: { 
             name: "Jasmine", 
@@ -19,7 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
             purpose: "Tech Support", 
             attitude: "Professional", 
             uniquetraits: "Detail-oriented" ,
-            limitations: "Be Polite"
+            limitations: "Be Polite",
+            'agent-profile-picture': "https://ideogram.ai/assets/image/lossless/response/GVc9ybL3SVatrIJ1CVs-Hw",
+            'agent-profile-name': "Jasmine",
+            'agent-profile-description': "Solving your tech needs always",
+            'agent-profile-reviews': "⭐ Excellent service!,⭐ Very professional,⭐ Highly recommended.",
         },
         Tony: { 
             name: "Tony", 
@@ -27,7 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
             purpose: "Business Growth", 
             attitude: "Charismatic", 
             uniquetraits: "Strategic Thinker" ,
-            limitations: "Be Polite"
+            limitations: "Be Polite",
+            'agent-profile-picture': "https://th.bing.com/th/id/OIG4.J3FJS681Id8VyS_JFFMA?pid=ImgGn",
+            'agent-profile-name': "Tony",
+            'agent-profile-description': "Your own expert business guru",
+            'agent-profile-reviews': "⭐ Excellent service!,⭐ Very professional,⭐ Highly recommended.",
         },
         agent4: {
             name: "Agent 4",
@@ -102,6 +114,18 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "/";
             return;
         }
+
+        const profilePicture = document.getElementById("agent-profile-picture").value || "https://via.placeholder.com/150";
+        const profileName = document.getElementById("agent-profile-name").value || localStorage.getItem("name") || "Agent Name";
+        const profileDescription = document.getElementById("agent-profile-description").value || localStorage.getItem("persona") || "Title";
+        const profileReviewsInput = document.getElementById("agent-profile-reviews").value || "Excellent service!,Very professional.,Highly recommended.";
+        const profileReviews = profileReviewsInput.split(",").map((review) => review.trim());
+
+        // Save to localStorage
+        localStorage.setItem("profilePicture", profilePicture);
+        localStorage.setItem("profileTitle", profileName);
+        localStorage.setItem("profileDescription", profileDescription);
+        localStorage.setItem("customerReviews", JSON.stringify(profileReviews));
 
         // Create a custom prompt string for submission
         const customPrompt = fields
