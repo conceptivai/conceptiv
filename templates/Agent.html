@@ -93,9 +93,12 @@
                     <label for="custom-prompt">Custom Prompt Adjustment - Leave empty for Default</label>
                     <textarea id="custom-prompt" rows="4" placeholder="Enter your custom prompt adjustment (Optional)"></textarea>
                 </div> -->
-                
+
+                <button type="button" id="create-new-agent" class="save-button">Modify Prompt Constraints</button>
+
                 <div id="custom-fields-container">
                     <!-- AI Customization Section -->
+                     <div id="promptarea">
                     <h3>AI Customization</h3>
                     <label for="name">Name</label>
                     <div class="input-with-icon">
@@ -132,9 +135,18 @@
                         <textarea id="limitations" placeholder="Enter limitations"></textarea>
                         <span class="info-icon" title="The agent's limitations during interactions, such as avoiding swear words or excluding specific details like competitors' pricing.">ℹ</span>
                     </div>
+                     </div>
                 
                     <!-- UI Customization Section -->
                     <h3>UI Customization</h3>
+
+                    <label for="agent-ui-color">Color Tone for Chat Page</label>
+                    <div class="input-with-icon">
+                        <input type="color" id="agent-ui-color" placeholder="#673ab7"></textarea>
+                        <span class="info-icon" title="This is the primary color of the UI for chat window.">ℹ</span>
+                    </div>
+
+
                     <label for="agent-profile-picture">Agent Profile Picture</label>
                     <div class="input-with-icon">
                         <textarea id="agent-profile-picture" placeholder="Enter image path or URL"></textarea>

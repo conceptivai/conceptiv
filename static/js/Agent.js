@@ -2,18 +2,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const agentCards = document.querySelectorAll(
     ".agent-card input[type='radio']"
   );
-  const fields = [
-    "name",
-    "persona",
-    "purpose",
-    "attitude",
-    "uniquetraits",
-    "limitations",
-    "agent-profile-picture",
-    "agent-profile-name",
-    "agent-profile-description",
-    "agent-profile-reviews",
-  ];
+  // const fields = [
+  //   "name",
+  //   "persona",
+  //   "purpose",
+  //   "attitude",
+  //   "uniquetraits",
+  //   "limitations",
+  //   "agent-profile-picture",
+  //   "agent-profile-name",
+  //   "agent-profile-description",
+  //   "agent-profile-reviews",
+  // ];
+
+  const fields = Array.from(document.querySelectorAll("#custom-fields-container label"))
+    .map(label => label.getAttribute("for"));
+
   const savedcustompropt = "customPromptKey";
 
   const agentData = {
@@ -30,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "An expert healthcare advisor here to help you!",
       "agent-profile-reviews":
         "⭐ Excellent service!,⭐ Very professional,⭐ Highly recommended.",
+        "agent-ui-color": "#673ab7",
     },
     Jasmine: {
       name: "Jasmine",
@@ -43,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "agent-profile-description": "Solving your tech needs always",
       "agent-profile-reviews":
         "⭐ Excellent service!,⭐ Very professional,⭐ Highly recommended.",
+      "agent-ui-color": "#eb6534",
     },
     Tony: {
       name: "Tony",
@@ -56,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "agent-profile-description": "Your own expert business guru",
       "agent-profile-reviews":
         "⭐ Excellent service!,⭐ Very professional,⭐ Highly recommended.",
+      "agent-ui-color": "#8c7116",
     },
     agent4: {
       name: "Agent 4",
@@ -72,6 +79,73 @@ document.addEventListener("DOMContentLoaded", () => {
       uniquetraits: "coming soon",
     },
   };
+
+  document.getElementById("create-new-agent").addEventListener("click", () => {
+    // Select all input fields and labels under #promptarea
+    const promptArea = document.getElementById("promptarea");
+    const inputs = Array.from(promptArea.querySelectorAll("textarea, input"));
+    const labels = Array.from(promptArea.querySelectorAll("label"));
+    const infoIcons = Array.from(promptArea.querySelectorAll(".info-icon"));
+
+    // Clear input fields and disable placeholders, skipping the first field
+    inputs.slice(1).forEach(input => {
+        input.value = "";
+        input.placeholder = ""; // Clear the placeholder
+    });
+
+    // Make labels editable, skipping the first label
+    labels.slice(1).forEach(label => {
+        label.contentEditable = true;
+        label.style.border = "1px dashed #673ab7"; // Optional visual cue
+        label.style.padding = "2px";
+
+        // Remove 'for' attribute to prevent focusing on input
+        label.removeAttribute("for");
+    });
+
+    // Disable info icons, skipping the first icon
+    infoIcons.slice(1).forEach(icon => {
+        icon.style.pointerEvents = "none"; // Disable interaction
+        icon.style.opacity = "0.5"; // Visual feedback for disabled state
+    });
+
+    localStorage.setItem("customPromptName", "Conceptive");
+
+    alert("You can now edit labels and start creating a new agent!");
+});
+
+function resetCustomization() {
+  const promptArea = document.getElementById("promptarea");
+  const inputs = promptArea.querySelectorAll("textarea, input");
+  const labels = promptArea.querySelectorAll("label");
+  const infoIcons = promptArea.querySelectorAll(".info-icon");
+
+  // Reset placeholders
+  inputs.forEach(input => {
+      const label = promptArea.querySelector(`label[for='${input.id}']`);
+      if (label) {
+          input.placeholder = `Enter ${label.textContent.trim()}`; // Restore placeholder dynamically
+      }
+  });
+
+  // Reset labels to non-editable state
+  labels.forEach(label => {
+      const fieldId = label.textContent.trim().toLowerCase().replace(/\s+/g, "-");
+      const input = document.querySelector(`#${fieldId}`);
+      if (input) {
+          label.setAttribute("for", fieldId);
+      }
+      label.contentEditable = false;
+      label.style.border = ""; // Remove visual cue
+      label.style.padding = "";
+  });
+
+  // Re-enable info icons
+  infoIcons.forEach(icon => {
+      icon.style.pointerEvents = ""; // Enable interaction
+      icon.style.opacity = "1"; // Restore visibility
+  });
+}
 
   document.querySelectorAll('.info-icon').forEach((icon) => {
     icon.addEventListener('mouseenter', () => {
@@ -160,6 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Save the bot name for use in the chat interface
       localStorage.setItem("customPromptName", data.name || "Bot");
       // updateChatboxTitle();
+      resetCustomization();
 
       fields.forEach((field) => {
         const input = document.getElementById(field);
@@ -208,12 +283,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const profileReviews = profileReviewsInput
         .split(",")
         .map((review) => review.trim());
+        const uicolor =
+        document.getElementById("agent-ui-color").value ||
+        "#673ab7";
 
       // Save to localStorage
       localStorage.setItem("profilePicture", profilePicture);
       localStorage.setItem("profileTitle", profileName);
       localStorage.setItem("profileDescription", profileDescription);
       localStorage.setItem("customerReviews", JSON.stringify(profileReviews));
+      localStorage.setItem("uicolor",uicolor);
 
       // // Create a custom prompt string for submission
       // const customPrompt = fields

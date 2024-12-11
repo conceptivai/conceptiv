@@ -3,7 +3,9 @@ from flask_cors import CORS
 import stripe
 import openai
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timezone
+from celery import Celery
+from flask_apscheduler import APScheduler
+from datetime import datetime, timezone, timedelta
 from sqlalchemy.sql import text
 import smtplib, ssl, random
 from email.message import EmailMessage
@@ -22,11 +24,97 @@ print(zeptokey)
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nehar:GwyPfbcWtpCFwCg2WNOc6YjNMxM0nZ77@dpg-ct8o3jd6l47c73d5grgg-a/aibot_3bis'  ##Onrender
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:1234@localhost/aibot'  ##Local
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nehar:GwyPfbcWtpCFwCg2WNOc6YjNMxM0nZ77@dpg-ct8o3jd6l47c73d5grgg-a/aibot_3bis'  ##Onrender
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:1234@localhost/aibot'  ##Local
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Celery configuration
+app.config['broker_url'] = 'rediss://red-ctckvrrtq21c73frunm0:wO6u9NWJfOoGud3X9jCoRKw2nB5n1kZc@oregon-redis.render.com:6379'
+app.config['result_backend'] = 'rediss://red-ctckvrrtq21c73frunm0:wO6u9NWJfOoGud3X9jCoRKw2nB5n1kZc@oregon-redis.render.com:6379'
+
 db = SQLAlchemy(app)
+
+
+def sendfollowmail(mailid):
+    port = 587
+    smtp_server = "smtp.zeptomail.com"
+    username="emailapikey"
+    password = zeptokey
+    message = "test mail for retention function"
+    msg = EmailMessage()
+    msg['Subject'] = "Conceptiv AI - Callback"
+    msg['From'] = "noreply@conceptiv.ai"
+    msg['To'] = mailid
+    msg.set_content(message)
+    try:
+        if port == 465:
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                server.login(username, password)
+                server.send_message(msg)
+        elif port == 587:
+            with smtplib.SMTP(smtp_server, port) as server:
+                server.starttls()
+                server.login(username, password)
+                server.send_message(msg)
+        else:
+            print ("use 465 / 587 as port value")
+            return False
+        print ("successfully sent")
+        return True
+    except Exception as e:
+        print (e)
+        return False
+
+app.config.update(
+    broker_url='rediss://red-ctckvrrtq21c73frunm0:wO6u9NWJfOoGud3X9jCoRKw2nB5n1kZc@oregon-redis.render.com:6379',
+    result_backend='rediss://red-ctckvrrtq21c73frunm0:wO6u9NWJfOoGud3X9jCoRKw2nB5n1kZc@oregon-redis.render.com:6379',
+    broker_transport_options={
+        'ssl': {
+            'ssl_cert_reqs': ssl.CERT_REQUIRED  # Change to ssl.CERT_REQUIRED if you have a valid certificate
+        }
+    },
+    redis_backend_transport_options={
+        'ssl': {
+            'ssl_cert_reqs': ssl.CERT_REQUIRED  # Same here
+        }
+    }
+)
+
+# Celery setup
+def make_celery(app):
+    celery = Celery(
+        app.import_name,
+        broker=app.config['broker_url'],
+        backend=app.config['result_backend']
+    )
+    celery.conf.update(app.config)
+    celery.conf.update(
+        broker_use_ssl={
+            'ssl_cert_reqs': 'CERT_REQUIRED'
+        },
+        redis_backend_use_ssl={
+            'ssl_cert_reqs': 'CERT_REQUIRED'
+        }
+    )
+    return celery
+
+celery = make_celery(app)
+
+# Celery task
+@celery.task
+def check_and_send_email():
+    sendfollowmail("neharshinz@gmail.com")
+
+# Flask-APScheduler setup for periodic tasks
+scheduler = APScheduler()
+
+@scheduler.task('interval', id='check_and_send_email', seconds=60)
+def periodic_task():
+    check_and_send_email.delay()  # Trigger the Celery task
+
+scheduler.init_app(app)
+scheduler.start()
 
 # Chat session model
 class ChatSession(db.Model):
@@ -163,6 +251,7 @@ def generateotp():
     otp_sent = sendOTP(otp, email)  # Use a different variable name to avoid conflict
 
     if otp_sent:
+
         return jsonify({
             "status": "success",
             "message": "OTP sent successfully!",
@@ -189,10 +278,10 @@ def create_checkout_session():
                 'quantity': 1,
             }],
             mode='payment',
-            # success_url='http://127.0.0.1:8000/UserLogin',
-            # cancel_url='http://127.0.0.1:8000/home',
-            success_url='https://conceptiv.onrender.com/UserLogin',
-            cancel_url='https://conceptiv.onrender.com/home',
+            success_url='http://127.0.0.1:8000/UserLogin',
+            cancel_url='http://127.0.0.1:8000/home',
+            # success_url='https://conceptiv.onrender.com/UserLogin',
+            # cancel_url='https://conceptiv.onrender.com/home',
         )
         print(checkout_session.id)
         print()
@@ -353,6 +442,7 @@ def modify_prompt():
         return jsonify({"message": "Prompt loaded successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/chat', methods=['POST'])
 def chat_endpoint():

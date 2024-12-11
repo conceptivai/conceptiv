@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  const FREE_USAGE_DURATION = 2 * 10 * 1000; // 10 minutes in milliseconds
+  const FREE_USAGE_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
   const TIMER_KEY = "chat_start_time";
 
   let countdownInterval = null;
@@ -71,6 +71,62 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function updateColorScheme(newColor) {
+    // Replace all occurrences of #673ab7 with the new color
+    document.querySelectorAll('*').forEach(element => {
+        const computedStyle = window.getComputedStyle(element);
+
+        // Update background color
+        if (computedStyle.backgroundColor === 'rgb(103, 58, 183)') {
+            element.style.backgroundColor = newColor;
+        }
+
+        // Update border color
+        if (computedStyle.borderColor === 'rgb(103, 58, 183)') {
+            element.style.borderColor = newColor;
+        }
+
+        // Update text color
+        if (computedStyle.color === 'rgb(103, 58, 183)') {
+            element.style.color = newColor;
+        }
+    });
+
+    // Adjust other complementary colors for better matching
+    const complementaryColor = adjustColorBrightness(newColor, 0.5); // Slightly brighter
+    const darkerColor = adjustColorBrightness(newColor, -0.5); // Slightly darker
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.style.backgroundColor = complementaryColor;
+        item.style.color = darkerColor;
+    });
+
+    document.querySelectorAll('.bubble').forEach(bubble => {
+        bubble.style.backgroundColor = complementaryColor;
+        bubble.style.color = darkerColor;
+    });
+}
+
+// Helper function to adjust brightness of a hex color
+function adjustColorBrightness(hex, factor) {
+    const [r, g, b] = hexToRgb(hex);
+    const newR = Math.min(255, Math.max(0, r + Math.round(255 * factor)));
+    const newG = Math.min(255, Math.max(0, g + Math.round(255 * factor)));
+    const newB = Math.min(255, Math.max(0, b + Math.round(255 * factor)));
+    return rgbToHex(newR, newG, newB);
+}
+
+// Convert hex to RGB
+function hexToRgb(hex) {
+    const bigint = parseInt(hex.replace('#', ''), 16);
+    return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+}
+
+// Convert RGB to hex
+function rgbToHex(r, g, b) {
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+}
+
   // Start Countdown
   function startCountdown(remainingTime) {
     clearInterval(countdownInterval); // Clear any previous intervals
@@ -85,6 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 1000);
   }
+
+  updateColorScheme(localStorage.getItem("uicolor")||"#673ab7");
 
   // Update Countdown Display
   function updateCountdownDisplay(remainingTime) {
@@ -181,6 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateChatboxTitle = () => {
     const botName = localStorage.getItem("customPromptName") || "Bot";
     document.getElementById("chat-title").textContent = botName;
+    // document.getElementById("chat-title").textContent = "Conceptive";
   };
 
   // Function to append a message with the chatbot's custom name
@@ -193,6 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nameSpan.classList.add("name");
       // Dynamically set the bot's name from localStorage
       nameSpan.textContent = localStorage.getItem("customPromptName") || "Bot";
+      // nameSpan.textContent = "Conceptive";
       messageDiv.appendChild(nameSpan);
     }
 
@@ -384,6 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   getOTP.addEventListener("click", async () => {
     const email = extraemail.value.trim();
+    localStorage.setItem("usermail",email);
 
     if (email) {
       try {
@@ -426,7 +487,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle Submit button click
   emailsubmit.addEventListener("click", () => {
     const enteredOTP = extraotp.value.trim();
-
+    // localStorage
+    
      hidePremiumModal();
 
 
@@ -436,6 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // } else {
     //   alert("Incorrect OTP. Please try again.");
     // }
+    // localStorage
   });
 
   // Fetch the initial bot message on page load
@@ -486,3 +549,5 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("premiumUser",false);
   };
 });
+
+

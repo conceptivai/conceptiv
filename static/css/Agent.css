@@ -159,10 +159,28 @@
     resize: none;
 }
 
+#custom-fields-container input {
+    width: 100%;
+    padding: 10px;
+    height: 60px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+}
+
 #custom-fields-container textarea:focus {
     border-color: #673ab7;
     outline: none;
     box-shadow: 0 0 5px rgba(103, 58, 183, 0.5);
+}
+
+#custom-fields-container label[contenteditable="true"] {
+    outline: none;
+    cursor: text;
 }
 
 /* Save Button */
