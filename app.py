@@ -2,16 +2,20 @@ from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 import stripe
 import openai
-# from Auth import openaikey
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
-from sqlalchemy.sql import text  # Import the text function
+from sqlalchemy.sql import text
+import smtplib, ssl, random
+from email.message import EmailMessage
 import os
 
-# Configure OpenAI API
+# Configure API Keys
 openai.api_key = os.environ.get('openaikey')
+stripe.api_key = os.environ.get('stripeprivatekey')
+stripepublickkey = os.environ.get('stripepublickey')
+zeptokey = os.environ.get('zeptomailkey')
 
-# other secret keys were removed
+print(zeptokey)
 
 
 # Flask app initialization
@@ -69,8 +73,8 @@ class tbl_prompt(db.Model):
     user_id = db.Column(db.BigInteger, nullable=True)
     company_id = db.Column(db.BigInteger, nullable=True)
 
-# Routes
-UI_DIRECTORY = os.path.join(os.getcwd(), 'Code', 'UI')
+# # Routes
+# UI_DIRECTORY = os.path.join(os.getcwd(), 'Code', 'UI')
 
 
 @app.route('/', methods=['GET'])
@@ -118,7 +122,56 @@ def serve_userlogin_page():
     return render_template('UserLogin.html')
 
 
-stripe.api_key = os.environ.get('stripeprivatekey')
+def sendOTP(OTP,mailid):
+    port = 587
+    smtp_server = "smtp.zeptomail.com"
+    username="emailapikey"
+    password = zeptokey
+    message = "Your OTP for Concceptive AI is "+ OTP +" . This is only for your private. Never share your OTP to unknown people over the phone or internet."
+    msg = EmailMessage()
+    msg['Subject'] = "Conceptiv AI - OTP"
+    msg['From'] = "noreply@conceptiv.ai"
+    msg['To'] = mailid
+    msg.set_content(message)
+    try:
+        if port == 465:
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                server.login(username, password)
+                server.send_message(msg)
+        elif port == 587:
+            with smtplib.SMTP(smtp_server, port) as server:
+                server.starttls()
+                server.login(username, password)
+                server.send_message(msg)
+        else:
+            print ("use 465 / 587 as port value")
+            return False
+        print ("successfully sent")
+        return True
+    except Exception as e:
+        print (e)
+        return False
+
+@app.route('/generateotp', methods=['POST'])
+def generateotp():
+    data = request.json
+    email = data.get('email')
+    otp = str(random.randint(100000, 999999))  # OTP must be a string to include in the email
+
+    # Send the OTP email
+    otp_sent = sendOTP(otp, email)  # Use a different variable name to avoid conflict
+
+    if otp_sent:
+        return jsonify({
+            "status": "success",
+            "message": "OTP sent successfully!",
+            "user": {
+                "otp": otp,
+            }
+        })
+    else:
+        return jsonify({"status": "failure", "message": "Failed to generate OTP"}), 401
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
@@ -129,16 +182,20 @@ def create_checkout_session():
                 'price_data': {
                     'currency': 'usd',
                     'product_data': {
-                        'name': 'Sample Product',
+                        'name': 'Conceptiv AI - 30 minute Premium',
                     },
-                    'unit_amount': 2000,  # Amount in cents
+                    'unit_amount': 999,  # Amount in cents
                 },
                 'quantity': 1,
             }],
             mode='payment',
+            # success_url='http://127.0.0.1:8000/UserLogin',
+            # cancel_url='http://127.0.0.1:8000/home',
             success_url='https://conceptiv.onrender.com/UserLogin',
             cancel_url='https://conceptiv.onrender.com/home',
         )
+        print(checkout_session.id)
+        print()
         return jsonify({'id': checkout_session.id})
     except Exception as e:
         return jsonify(error=str(e)), 403
@@ -280,7 +337,7 @@ def modify_prompt():
         prompt_entry = db.session.query(tbl_prompt).filter_by(user_id=user_id).first()
         if not prompt_entry:
             new_prompt = tbl_prompt(
-                role='user',  # Assuming role is 'user'
+                role='admin',  # Assuming role is 'user'
                 prompt=custom_prompt,
                 user_id=user_id,
                 company_id=company_id,
@@ -319,7 +376,7 @@ def chat_endpoint():
             return jsonify({"error": "Session not initialized. Please set up a custom prompt first."}), 400
 
         # Prepare history for OpenAI API
-        constraints=" Whenever responding to user saying hi, introduce yourself and speak. Keep your responses consize unless it is demanded by the situation of conversation for it to be long, else try to keep it within the amount how a person might in a clear text based conversation"
+        constraints=" Whenever responding to user saying hi, introduce yourself and speak. Keep your responses consize unless it is demanded by the situation of conversation for it to be long, else try to keep it within the amount how a person might in a clear text based conversation. Keep your conversations interactive by asking questions when required instead of just answering with a statement always."
         constrained_prompt=[{"role": "user", "content": constraints}]
         history = session.history + [{"role": "user", "content": user_message}]
         session_history = [{"role": "system", "content": session.custom_prompt}] + history + constrained_prompt
@@ -327,7 +384,7 @@ def chat_endpoint():
 
         # Correct usage of openai.chat.completions.create
         response =  openai.chat.completions.create(
-            model="gpt-4",  # Use the desired model
+            model="gpt-4o-mini",  # Use the desired model
             messages=session_history
         )
         ai_response = response.choices[0].message.content.strip()

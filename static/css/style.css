@@ -42,12 +42,14 @@ body {
   background-color: #e09100;
   border-radius: 5px;
   text-decoration: none;
+  padding: 10px;
   font-size: 1rem;
   font-weight: 400;
 }
 
 .nav-item:hover {
-  text-decoration: underline;
+  background-color: #d1c4e9;
+  color: #333;
 }
 
 .chatbox-section {
@@ -299,8 +301,32 @@ body {
   font-size: 1rem;
 }
 
+.modal-content input{
+  width: 80%;
+  object-fit: contain;
+  padding: 10px;
+  font-size: 1rem;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-content button:disabled {
+  background: #ccc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: disabled;
+  font-size: 1rem;
+}
+
 .modal-content button:hover {
   background: #5e35b1;
+}
+.modal-content button:hover:disabled {
+  background: #ccc;
 }
 
 
@@ -577,4 +603,82 @@ textarea{
   .profile-section {
       margin-top: 20px; /* Add spacing between the chatbox and profile */
   }
+}
+
+/* Overlay background */
+#stripe-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  visibility: hidden; /* Hidden by default */
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+
+/* Payment form container */
+#stripe-payment-container {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  text-align: center;
+  max-height: 800px;
+}
+
+#stripe-payment-container input{
+  width:100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+}
+
+#stripe-payment-container h2{
+  width:100%;
+  max-width: 300px;
+  padding: 15px;
+  margin: 20px;
+}
+
+#stripe-payment-container label{
+  width:100%;
+  display: block;
+  max-width: 300px;
+  padding: 15px;
+  margin-bottom: 20px;
+  align-self: flex-start;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 200;
+}
+
+/* Show overlay */
+#stripe-overlay.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Button styles (optional) */
+#stripe-submit-button {
+  background-color: #6772e5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#stripe-submit-button:hover {
+  background-color: #5469d4;
 }

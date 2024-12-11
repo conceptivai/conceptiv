@@ -41,7 +41,7 @@ th, td {
 }
 
 th {
-    background-color: #34495e;
+    background-color: #673ab7;
     color: #ecf0f1;
     font-weight: bold;
 }
@@ -51,8 +51,8 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: #f1c40f;
-    color: #fff;
+    background-color: #d1c4e9;
+    /* color: #fff; */
 }
 
 /* Filter Section */
