@@ -73,6 +73,64 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
+  document.querySelectorAll('.info-icon').forEach((icon) => {
+    icon.addEventListener('mouseenter', () => {
+        // Get the title attribute value
+        const titleText = icon.getAttribute('title');
+        
+        if (!titleText) return;
+
+        // Remove the title attribute to disable the default tooltip
+        icon.setAttribute('data-title', titleText);
+        icon.removeAttribute('title');
+
+        // Create and display the custom tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = titleText;
+        document.body.appendChild(tooltip);
+
+        // Calculate dimensions and position
+        const iconRect = icon.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+
+        let top = iconRect.top + (iconRect.height - tooltipRect.height) / 2;
+        let left = iconRect.right + 10;
+
+        // Adjust for viewport boundaries
+        if (left + tooltipRect.width > window.innerWidth) {
+            left = iconRect.left - tooltipRect.width - 10;
+        }
+
+        if (top < 0) {
+            top = 10;
+        } else if (top + tooltipRect.height > window.innerHeight) {
+            top = window.innerHeight - tooltipRect.height - 10;
+        }
+
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+
+        // Allow the tooltip to resize based on content
+        tooltip.style.width = 'auto';
+        tooltip.style.height = 'auto';
+    });
+
+    icon.addEventListener('mouseleave', () => {
+        // Restore the title attribute
+        const titleText = icon.getAttribute('data-title');
+        if (titleText) {
+            icon.setAttribute('title', titleText);
+            icon.removeAttribute('data-title');
+        }
+
+        // Remove the custom tooltip
+        const tooltip = document.querySelector('.tooltip');
+        if (tooltip) tooltip.remove();
+    });
+});
+
+
   // const updateChatboxTitle = () => {
   //     const botName = localStorage.getItem("customPromptName") || "Bot";
   //     document.getElementById("chat-title").textContent = botName;

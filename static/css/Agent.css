@@ -58,32 +58,60 @@
     color: #777;
 }
 
-/* Custom Prompt Adjustment
-#custom-prompt-container {
-    margin-bottom: 20px;
+#custom-fields-container h3 {
+    font-size: 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    color: #673ab7;
+    margin-top: 40px;
+    margin-bottom: 10px;
 }
 
-#custom-prompt-container.hidden {
-    display: none;
+/* Tooltip Styles */
+.tooltip {
+    position: fixed; /* Positioned relative to the viewport */
+    font-family: 'Poppins', sans-serif;
+    background: #333;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    white-space: pre-wrap; /* Allows line breaks */
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    pointer-events: none; /* Prevent tooltips from capturing mouse events */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    max-width: 250px; /* Set a maximum width */
+    word-wrap: break-word; /* Break words if too long */
 }
 
-#custom-prompt {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
-    resize: vertical; /* Allow vertical resizing */
-/* }
+.info-icon {
+    position: relative;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #673ab7;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: solid 1px #673ab7;
+    background-color: #f3f3f3;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+}
 
-#custom-prompt:focus {
-    border-color: #673ab7;
-    outline: none;
-    box-shadow: 0 0 5px rgba(103, 58, 183, 0.5);
-} */
+.info-icon:hover {
+    background-color: #673ab7;
+    color: white;
+}
 
+/* Input Fields and Containers */
 #custom-fields-container label {
     display: block;
     margin-top: 10px;
@@ -92,34 +120,43 @@
     color: #673ab7;
 }
 
-#custom-fields-container input {
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input-with-icon textarea,
+.input-with-icon input {
     width: 100%;
+    max-width: calc(100% - 30px); /* Account for icon space */
     padding: 10px;
-    margin-bottom: 10px;
+    field-sizing: content;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
 }
 
-#custom-fields-container input:focus {
+.input-with-icon textarea:focus,
+.input-with-icon input:focus {
     border-color: #673ab7;
     outline: none;
     box-shadow: 0 0 5px rgba(103, 58, 183, 0.5);
 }
 
+/* Textarea Styles */
 #custom-fields-container textarea {
     width: 100%;
     padding: 10px;
-    /* height: fit-content; */
-    field-sizing: content;
     margin-bottom: 10px;
     font-size: 1rem;
     font-family: 'Poppins', sans-serif;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    resize: vertical;
+    resize: none;
 }
 
 #custom-fields-container textarea:focus {
@@ -128,7 +165,7 @@
     box-shadow: 0 0 5px rgba(103, 58, 183, 0.5);
 }
 
-/* Button */
+/* Save Button */
 .save-button {
     background: #673ab7;
     color: white;

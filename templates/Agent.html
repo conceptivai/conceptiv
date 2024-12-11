@@ -93,37 +93,71 @@
                     <label for="custom-prompt">Custom Prompt Adjustment - Leave empty for Default</label>
                     <textarea id="custom-prompt" rows="4" placeholder="Enter your custom prompt adjustment (Optional)"></textarea>
                 </div> -->
-
+                
                 <div id="custom-fields-container">
+                    <!-- AI Customization Section -->
+                    <h3>AI Customization</h3>
                     <label for="name">Name</label>
-                    <textarea id="name" placeholder="Enter the name"></textarea>
+                    <div class="input-with-icon">
+                        <textarea id="name" placeholder="Enter the name"></textarea>
+                        <span class="info-icon" title="This is the name the agent uses to identify itself in messages and is also displayed as the recipient's name on the screen.">ℹ</span>
+                    </div>
                 
                     <label for="persona">Persona</label>
-                    <textarea id="persona" placeholder="Enter the persona"></textarea>
+                    <div class="input-with-icon">
+                        <textarea id="persona" placeholder="Enter the persona"></textarea>
+                        <span class="info-icon" title="The persona defines the agent's role, job or function, representing how the agent presents itself to the user, such as a fortune teller or a life coach.">ℹ</span>
+                    </div>
                 
                     <label for="purpose">Purpose</label>
-                    <textarea id="purpose" placeholder="Enter the purpose"></textarea>
+                    <div class="input-with-icon">
+                        <textarea id="purpose" placeholder="Enter the purpose"></textarea>
+                        <span class="info-icon" title="The purpose is the agent's primary objective in interacting with the user, such as selling readings or lessons, while adopting the assigned persona.">ℹ</span>
+                    </div>
                 
                     <label for="attitude">Attitude</label>
-                    <textarea id="attitude" placeholder="Enter the attitude"></textarea>
+                    <div class="input-with-icon">
+                        <textarea id="attitude" placeholder="Enter the attitude"></textarea>
+                        <span class="info-icon" title="The agent's attitude, such as being empathetic or professional, when responding to user messages.">ℹ</span>
+                    </div>
                 
                     <label for="uniquetraits">Unique Traits</label>
-                    <textarea id="uniquetraits" placeholder="Enter unique traits"></textarea>
+                    <div class="input-with-icon">
+                        <textarea id="uniquetraits" placeholder="Enter unique traits"></textarea>
+                        <span class="info-icon" title="These specify the agent's unique traits, such as speaking like someone from the UK or using Gen Z slang.">ℹ</span>
+                    </div>
                 
                     <label for="limitations">Limitations</label>
-                    <textarea id="limitations" placeholder="Enter limitations"></textarea>
-
+                    <div class="input-with-icon">
+                        <textarea id="limitations" placeholder="Enter limitations"></textarea>
+                        <span class="info-icon" title="The agent's limitations during interactions, such as avoiding swear words or excluding specific details like competitors' pricing.">ℹ</span>
+                    </div>
+                
+                    <!-- UI Customization Section -->
+                    <h3>UI Customization</h3>
                     <label for="agent-profile-picture">Agent Profile Picture</label>
-                    <input type="text" id="agent-profile-picture" placeholder="Enter image path or URL">
-            
+                    <div class="input-with-icon">
+                        <textarea id="agent-profile-picture" placeholder="Enter image path or URL"></textarea>
+                        <span class="info-icon" title="This is the profile picture displayed on the agent card near the chat window. It can be a direct link to an image in JPEG or PNG format.">ℹ</span>
+                    </div>
+                
                     <label for="agent-profile-name">Agent Profile Name</label>
-                    <input type="text" id="agent-profile-name" placeholder="Enter agent name">
-            
+                    <div class="input-with-icon">
+                        <textarea id="agent-profile-name" placeholder="Enter agent name"></textarea>
+                        <span class="info-icon" title="This is the agent name displayed beneath the profile picture on the agent card. It is purely aesthetic, independent of the agent name assigned earlier, and does not impact functionality.">ℹ</span>
+                    </div>
+                
                     <label for="agent-profile-description">Agent Description</label>
-                    <textarea id="agent-profile-description" placeholder="Enter agent description"></textarea>
-            
+                    <div class="input-with-icon">
+                        <textarea id="agent-profile-description" placeholder="Enter agent description"></textarea>
+                        <span class="info-icon" title="This is the agent description shown beneath the profile picture on the agent card. It serves only an aesthetic purpose, is independent of the agent's previously assigned role, and does not affect functionality.">ℹ</span>
+                    </div>
+                
                     <label for="agent-profile-reviews">Agent Reviews</label>
-                    <textarea id="agent-profile-reviews" placeholder="Enter reviews (comma-separated)"></textarea>
+                    <div class="input-with-icon">
+                        <textarea id="agent-profile-reviews" placeholder="Enter reviews (comma-separated)"></textarea>
+                        <span class="info-icon" title="This is the list of reviews displayed on the agent card. Separate each review with a comma.">ℹ</span>
+                    </div>
                 </div>
 
                 <!-- Try Now Button -->
